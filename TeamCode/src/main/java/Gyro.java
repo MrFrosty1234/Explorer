@@ -14,16 +14,19 @@ public class Gyro {
         public static double headingRotation = 0;
         private double angle = 0;
         IMU gyro;
-        HardwareMap hardwareMap;
-        public Gyro(){
+        Explorer explorer;
 
+        public Gyro(Explorer robot){
 
-            gyro = hardwareMap.get(IMU.class,"imu");
+            explorer = robot;
+
+            gyro = explorer.linearOpMode.hardwareMap.get(IMU.class,"imu");
             Orientation hubRotation = xyzOrientation(xRotation, yRotation, headingRotation);
 
             RevHubOrientationOnRobot orientationOnRobot = new RevHubOrientationOnRobot
                     (RevHubOrientationOnRobot.LogoFacingDirection.RIGHT, RevHubOrientationOnRobot.UsbFacingDirection.UP);
             gyro.initialize(new IMU.    Parameters(orientationOnRobot));
+
             reset();
         }
         public void reset(){
